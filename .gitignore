@@ -1,0 +1,4 @@
+.vs/
+conf/etc/nginx/sites-enabled/
+build-container.sh
+build-image.sh
