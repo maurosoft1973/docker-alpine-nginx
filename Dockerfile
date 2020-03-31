@@ -111,11 +111,12 @@ RUN \
 	rm /etc/nginx/nginx.conf && \
 	rm /etc/nginx/nginx.conf.default && \
 	mkdir /etc/nginx/conf.d && \
+	mkdir /etc/nginx/geoip2 && \
 	mkdir /etc/nginx/sites-enabled && \
 	ln -s /usr/lib/nginx/modules/ /etc/nginx/modules	
 
 COPY conf/etc/nginx/custom /etc/nginx/custom
-COPY conf/etc/nginx/geoip2 /etc/nginx/geoip2
+#COPY conf/etc/nginx/geoip2 /etc/nginx/geoip2
 COPY conf/etc/nginx/global /etc/nginx/global
 COPY conf/etc/nginx/nginx.conf /etc/nginx/nginx.conf
 COPY conf/etc/nginx/dhparams.pem /etc/nginx/dhparams.pem
