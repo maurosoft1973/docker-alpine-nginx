@@ -17,7 +17,7 @@ amd64 build:
   - master
   script:
   - BUILD_DATE=$(date +"%Y-%m-%d")
-  - docker build --build-arg BUILD_DATE=$BUILD_DATE -t maurosoft1973/alpine-nginx:amd64 -t maurosoft1973/alpine-nginx:x86_64 .
+  - docker build --build-arg BUILD_DATE=$BUILD_DATE -t maurosoft1973/alpine-nginx -t maurosoft1973/alpine-nginx:amd64 -t maurosoft1973/alpine-nginx:x86_64 .
   - echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_USER" --password-stdin
   - docker push maurosoft1973/alpine-nginx:amd64
   - docker push maurosoft1973/alpine-nginx:x86_64
