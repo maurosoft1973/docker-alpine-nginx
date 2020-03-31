@@ -1,0 +1,24 @@
+image: docker:stable
+
+stages:
+  - Build e Push image
+  - Documentation
+
+update readme:
+  stage: Documentation
+  only:
+  - master
+  script:
+  - docker run --rm -v $(pwd):/data/ -e DOCKERHUB_USERNAME="$DOCKER_HUB_USER" -e DOCKERHUB_PASSWORD="$DOCKER_HUB_PASSWORD" -e DOCKERHUB_REPO_PREFIX="maurosoft1973" -e DOCKERHUB_REPO_NAME="alpine-nginx" -e SHORT_DESCRIPTION="Alpine Nginx" maurosoft1973/alpine-readme-to-dockerhub
+
+amd64 build:
+  stage: Build e Push image
+  only:
+  - master
+  script:
+  - BUILD_DATE=$(date +"%Y-%m-%d")
+  - docker build --build-arg BUILD_DATE=$BUILD_DATE -t maurosoft1973/alpine-nginx:amd64 -t maurosoft1973/alpine-nginx:x86_64 .
+  - echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_USER" --password-stdin
+  - docker push maurosoft1973/alpine-nginx:amd64
+  - docker push maurosoft1973/alpine-nginx:x86_64
+  - docker push maurosoft1973/alpine-nginx

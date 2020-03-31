@@ -2,16 +2,25 @@ FROM maurosoft1973/alpine:3.11.5-amd64
 
 ENV MAXMIND_VERSION=1.4.2
 ENV NGINX_VERSION=1.17.7
-ENV LOCALTIME=Europe/Brussels
-ENV WWW_DATA_UID=33
-ENV WWW_USER=t500
-ENV WWW_USER_UID=5001
-
-#adduser -s /bin/false -H -u ${WWW_USER_UID} -D ${WWW_USER} && \
 	
+ARG BUILD_DATE
+
+LABEL maintainer="Mauro Cardillo <mauro.cardillo@gmail.com>" \
+  architecture="amd64/x86_64" \
+  alpine-version="3.11.5" \
+  build="27-Mar-2020" \
+  org.opencontainers.image.title="Alpine Nginx" \
+  org.opencontainers.image.description="Alping Nginx with Geo" \
+  org.opencontainers.image.authors="Mauro Cardillo <mauro.cardillo@gmail.com>" \
+  org.opencontainers.image.vendor="Mauro Cardillo" \
+  org.opencontainers.image.version="v1.17.7" \
+  org.opencontainers.image.url="https://hub.docker.com/r/maurosoft1973/alpine-readme-to-dockerhub/" \
+  org.opencontainers.image.source="https://github.com/maurosoft1973/alpine-readme-to-dockerhub" \
+  org.opencontainers.image.created=$BUILD_DATE
+
 RUN \
 	deluser xfs && \
-	adduser -s /bin/false -H -u ${WWW_DATA_UID} -D www-data && \
+	adduser -s /bin/false -H -u 33 -D www-data && \
 	mkdir -p /var/run/nginx/ && \
 	build_pkgs="build-base linux-headers openssl-dev pcre-dev gd-dev libxslt-dev wget zlib-dev" && \
 	runtime_pkgs="ca-certificates libmaxminddb openssl gd libxslt pcre zlib tzdata git" && \
@@ -103,17 +112,13 @@ RUN \
 	rm /etc/nginx/nginx.conf.default && \
 	mkdir /etc/nginx/conf.d && \
 	mkdir /etc/nginx/sites-enabled && \
-	ln -s /usr/lib/nginx/modules/ /etc/nginx/modules && \
-	cp /usr/share/zoneinfo/${LOCALTIME} /etc/localtime
+	ln -s /usr/lib/nginx/modules/ /etc/nginx/modules	
 
 COPY conf/etc/nginx/custom /etc/nginx/custom
 COPY conf/etc/nginx/geoip2 /etc/nginx/geoip2
 COPY conf/etc/nginx/global /etc/nginx/global
-#COPY conf/etc/nginx/sites-enabled /etc/nginx/sites-enabled
 COPY conf/etc/nginx/nginx.conf /etc/nginx/nginx.conf
 COPY conf/etc/nginx/dhparams.pem /etc/nginx/dhparams.pem
-
-#STOPSIGNAL SIGTERM
 
 ADD files/run.sh /scripts/run.sh
 
