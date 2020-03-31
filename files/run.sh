@@ -2,7 +2,7 @@
 
 WWW_USER=${WWW_USER:-"www"}
 WWW_USER_UID=${WWW_USER_UID:-"5001"}
-LOCALTIME=${WWW_USER_UID:-"Europe/Brussels"}
+LOCALTIME=${LOCALTIME:-"Europe/Brussels"}
 
 echo "Create User $WWW_USER with uid $WWW_USER_UID"
 adduser -s /bin/false -H -u ${WWW_USER_UID} -D ${WWW_USER}
