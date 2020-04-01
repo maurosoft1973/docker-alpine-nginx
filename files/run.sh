@@ -18,11 +18,12 @@ sed "s/user {user}/user ${WWW_USER}/g" /etc/nginx/nginx.conf > /tmp/nginx.conf
 cp /tmp/nginx.conf /etc/nginx/nginx.conf
 
 echo "Download Geo DB"
-wget https://gitlab.com/maurosoft1973-docker/alpine-nginx/conf/etc/nginx/geoip2/GeoLite2-ASN.mmdb -o /etc/nginx/geoip2/GeoLite2-ASN.mmdb
-wget https://gitlab.com/maurosoft1973-docker/alpine-nginx/conf/etc/nginx/geoip2/GeoLite2-City.mmdb -o /etc/nginx/geoip2/GeoLite2-City.mmdb
-wget https://gitlab.com/maurosoft1973-docker/alpine-nginx/conf/etc/nginx/geoip2/GeoLite2-Country.mmdb -o /etc/nginx/geoip2/GeoLite2-Country.mmdb
+wget https://gitlab.com/maurosoft1973-docker/alpine-nginx/-/raw/master/conf/etc/nginx/geoip2/GeoLite2-ASN.mmdb -o /etc/nginx/geoip2/GeoLite2-ASN.mmdb
+wget https://gitlab.com/maurosoft1973-docker/alpine-nginx/-/raw/master/conf/etc/nginx/geoip2/GeoLite2-City.mmdb -o /etc/nginx/geoip2/GeoLite2-City.mmdb
+wget https://gitlab.com/maurosoft1973-docker/alpine-nginx/-/raw/master/conf/etc/nginx/geoip2/GeoLite2-Country.mmdb -o /etc/nginx/geoip2/GeoLite2-Country.mmdb
 
 echo "Change default localtime with ${LOCALTIME}"
 cp /usr/share/zoneinfo/${LOCALTIME} /etc/localtime
 
+#nginx -g
 /bin/sh
