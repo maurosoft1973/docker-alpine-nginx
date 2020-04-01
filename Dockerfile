@@ -116,7 +116,7 @@ RUN \
 	ln -s /usr/lib/nginx/modules/ /etc/nginx/modules	
 
 COPY conf/etc/nginx/custom /etc/nginx/custom
-#COPY conf/etc/nginx/geoip2 /etc/nginx/geoip2
+COPY conf/etc/nginx/geoip2 /etc/nginx/geoip2
 COPY conf/etc/nginx/global /etc/nginx/global
 COPY conf/etc/nginx/nginx.conf /etc/nginx/nginx.conf
 COPY conf/etc/nginx/dhparams.pem /etc/nginx/dhparams.pem
