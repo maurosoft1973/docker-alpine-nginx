@@ -26,4 +26,5 @@ echo "Change default localtime with ${LOCALTIME}"
 cp /usr/share/zoneinfo/${LOCALTIME} /etc/localtime
 
 #nginx -g
-/bin/sh
+#/bin/sh
+/usr/sbin/nginx -c /etc/nginx/nginx.conf
