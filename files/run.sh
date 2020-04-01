@@ -18,15 +18,15 @@ sed "s/user {user}/user ${WWW_USER}/g" /etc/nginx/nginx.conf > /tmp/nginx.conf
 cp /tmp/nginx.conf /etc/nginx/nginx.conf
 
 echo "Download Geo DB"
-if [ -f "/etc/nginx/geoip2/GeoLite2-ASN.mmdb" ]; then
+if [ ! -f "/etc/nginx/geoip2/GeoLite2-ASN.mmdb" ]; then
     wget https://gitlab.com/maurosoft1973-docker/alpine-nginx/-/raw/master/conf/etc/nginx/geoip2/GeoLite2-ASN.mmdb -O /etc/nginx/geoip2/GeoLite2-ASN.mmdb
 fi
 
-if [ -f "/etc/nginx/geoip2/GeoLite2-City.mmdb" ]; then
+if [ ! -f "/etc/nginx/geoip2/GeoLite2-City.mmdb" ]; then
     wget https://gitlab.com/maurosoft1973-docker/alpine-nginx/-/raw/master/conf/etc/nginx/geoip2/GeoLite2-City.mmdb -O /etc/nginx/geoip2/GeoLite2-City.mmdb
 fi
 
-if [ -f "/etc/nginx/geoip2/GeoLite2-Country.mmdb" ]; then
+if [ ! -f "/etc/nginx/geoip2/GeoLite2-Country.mmdb" ]; then
     wget https://gitlab.com/maurosoft1973-docker/alpine-nginx/-/raw/master/conf/etc/nginx/geoip2/GeoLite2-Country.mmdb -O /etc/nginx/geoip2/GeoLite2-Country.mmdb
 fi
 
