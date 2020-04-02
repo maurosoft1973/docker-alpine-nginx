@@ -8,7 +8,7 @@ ARG BUILD_DATE
 LABEL maintainer="Mauro Cardillo <mauro.cardillo@gmail.com>" \
   architecture="amd64/x86_64" \
   alpine-version="3.11.5" \
-  build="27-Mar-2020" \
+  build="02-Apr-2020" \
   org.opencontainers.image.title="Alpine Nginx" \
   org.opencontainers.image.description="Alping Nginx with Geo" \
   org.opencontainers.image.authors="Mauro Cardillo <mauro.cardillo@gmail.com>" \
@@ -47,8 +47,8 @@ RUN \
 	--http-log-path=/var/log/nginx/access.log \
 	--pid-path=/var/run/nginx.pid \
 	--lock-path=/var/run/nginx.lock \
-	--user=www-data \
-	--group=www-data \
+	--user=nginx \
+	--group=nginx \
 	--build=Alpine \
 	--builddir=${NGINX_VERSION} \
 	--with-select_module \
@@ -88,7 +88,6 @@ RUN \
 	--http-scgi-temp-path=/var/cache/nginx/scgi_temp && \
 	make && \
 	make install && \
-	sed -i -e 's/#access_log  logs\/access.log  main;/access_log \/dev\/stdout;/' -e 's/#error_log  logs\/error.log  notice;/error_log stderr notice;/' /etc/nginx/nginx.conf && \
 	addgroup -S nginx && \
 	adduser -D -S -h /var/cache/nginx -s /sbin/nologin -G nginx nginx && \
 	rm -rf /tmp/* && \
@@ -128,5 +127,3 @@ RUN chmod -R 755 /scripts
 VOLUME ["/var/www","/etc/nginx/sites-enabled"]
 
 ENTRYPOINT ["/scripts/run.sh"]
-
-#CMD ["nginx", "-g", "daemon off;"]
