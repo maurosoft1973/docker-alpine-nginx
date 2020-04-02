@@ -2,8 +2,8 @@
 
 WWW_USER=${WWW_USER:-"www"}
 WWW_USER_UID=${WWW_USER_UID:-"5001"}
-WWW_GROUP=${WWW_USER:-"www-data"}
-WWW_GROUP_UID=${WWW_USER_UID:-"33"}
+WWW_GROUP=${WWW_GROUP:-"www-data"}
+WWW_GROUP_UID=${WWW_GROUP_UID:-"33"}
 LOCALTIME=${LOCALTIME:-"Europe/Brussels"}
 
 #Create User (if not exist)
