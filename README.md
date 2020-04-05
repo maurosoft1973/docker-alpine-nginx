@@ -5,3 +5,14 @@
 [![Docker Stars](https://img.shields.io/docker/stars/maurosoft1973/alpine-nginx.svg?style=for-the-badge&logo=docker)](https://hub.docker.com/r/maurosoft1973/alpine-nginx/)
 
 [![Alpine Version](https://img.shields.io/badge/Alpine%20version-v3.11.5-green.svg?style=for-the-badge)](https://alpinelinux.org/)
+
+
+This Docker image [(maurosoft1973/alpine-nginx)](https://hub.docker.com/r/maurosoft1973/alpine-nginx/) is based on the minimal [Alpine Linux](https://alpinelinux.org/) with [Nginx v1.17.9](https://nginx.org/) web server.
+
+##### Alpine Version 3.11.5 (Released Mar 23, 2020)
+##### Nginx Version 1.17.9
+
+----
+
+## What is Alpine Linux?
+Alpine Linux is a Linux distribution built around musl libc and BusyBox. The image is only 5 MB in size and has access to a package repository that is much more complete than other BusyBox based images. This makes Alpine Linux a great image base for utilities and even production applications. Read more about Alpine Linux here and you can see how their mantra fits in right at home with Docker images.

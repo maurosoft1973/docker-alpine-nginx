@@ -1,21 +1,21 @@
 FROM maurosoft1973/alpine:3.11.5-amd64
 
 ENV MAXMIND_VERSION=1.4.2
-ENV NGINX_VERSION=1.17.7
+ENV NGINX_VERSION=1.17.9
 	
 ARG BUILD_DATE
 
 LABEL maintainer="Mauro Cardillo <mauro.cardillo@gmail.com>" \
   architecture="amd64/x86_64" \
   alpine-version="3.11.5" \
-  build="02-Apr-2020" \
+  build="05-Apr-2020" \
   org.opencontainers.image.title="Alpine Nginx" \
-  org.opencontainers.image.description="Alping Nginx with Geo" \
+  org.opencontainers.image.description="Nginx Docker image running on Alpine Linux" \
   org.opencontainers.image.authors="Mauro Cardillo <mauro.cardillo@gmail.com>" \
   org.opencontainers.image.vendor="Mauro Cardillo" \
-  org.opencontainers.image.version="v1.17.7" \
-  org.opencontainers.image.url="https://hub.docker.com/r/maurosoft1973/alpine-readme-to-dockerhub/" \
-  org.opencontainers.image.source="https://github.com/maurosoft1973/alpine-readme-to-dockerhub" \
+  org.opencontainers.image.version="v1.17.9" \
+  org.opencontainers.image.url="https://hub.docker.com/r/maurosoft1973/alpine-nginx/" \
+  org.opencontainers.image.source="https://github.com/maurosoft1973/alpine-nginx" \
   org.opencontainers.image.created=$BUILD_DATE
 
 RUN \
