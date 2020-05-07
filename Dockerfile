@@ -1,4 +1,4 @@
-FROM maurosoft1973/alpine:3.11.5-amd64
+FROM maurosoft1973/alpine:3.11.6-amd64
 
 ENV MAXMIND_VERSION=1.4.2
 ENV NGINX_VERSION=1.17.9

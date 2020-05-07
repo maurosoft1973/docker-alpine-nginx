@@ -4,12 +4,12 @@
 [![Docker Pulls](https://img.shields.io/docker/pulls/maurosoft1973/alpine-nginx.svg?style=for-the-badge&logo=docker)](https://hub.docker.com/r/maurosoft1973/alpine-nginx/)
 [![Docker Stars](https://img.shields.io/docker/stars/maurosoft1973/alpine-nginx.svg?style=for-the-badge&logo=docker)](https://hub.docker.com/r/maurosoft1973/alpine-nginx/)
 
-[![Alpine Version](https://img.shields.io/badge/Alpine%20version-v3.11.5-green.svg?style=for-the-badge)](https://alpinelinux.org/)
+[![Alpine Version](https://img.shields.io/badge/Alpine%20version-v3.11.6-green.svg?style=for-the-badge)](https://alpinelinux.org/)
 
 
 This Docker image [(maurosoft1973/alpine-nginx)](https://hub.docker.com/r/maurosoft1973/alpine-nginx/) is based on the minimal [Alpine Linux](https://alpinelinux.org/) with [Nginx v1.17.9](https://nginx.org/) web server.
 
-##### Alpine Version 3.11.5 (Released Mar 23, 2020)
+##### Alpine Version 3.11.6 (Released Apr 23, 2020)
 ##### Nginx Version 1.17.9
 
 ----
