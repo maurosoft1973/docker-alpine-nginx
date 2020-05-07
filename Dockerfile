@@ -28,6 +28,12 @@ RUN \
 	build_pkgs="build-base linux-headers openssl-dev pcre-dev gd-dev libxslt-dev wget zlib-dev" && \
 	runtime_pkgs="ca-certificates libmaxminddb openssl gd libxslt pcre zlib tzdata git" && \
 	apk --no-cache add ${build_pkgs} ${runtime_pkgs} && \
+	apk --no-cache add libintl && \
+	apk --no-cache --virtual .locale_build add cmake make musl-dev gcc gettext-dev git && \
+	git clone https://gitlab.com/rilian-la-te/musl-locales && \
+	cd musl-locales && cmake -DLOCALE_PROFILE=OFF -DCMAKE_INSTALL_PREFIX:PATH=/usr . && make && make install && \
+	cd .. && rm -r musl-locales && \
+	apk del .locale_build && \
 	cd /tmp && \
 	git clone https://github.com/leev/ngx_http_geoip2_module /ngx_http_geoip2_module && \
 	wget https://github.com/maxmind/libmaxminddb/releases/download/${MAXMIND_VERSION}/libmaxminddb-${MAXMIND_VERSION}.tar.gz && \
@@ -115,14 +121,8 @@ RUN \
 	mkdir /etc/nginx/conf.d && \
 	mkdir /etc/nginx/geoip2 && \
 	mkdir /etc/nginx/sites-enabled && \
-	ln -s /usr/lib/nginx/modules/ /etc/nginx/modules && \
-	apk --no-cache add libintl && \
-	apk --no-cache --virtual .locale_build add cmake make musl-dev gcc gettext-dev git && \
-	git clone https://gitlab.com/rilian-la-te/musl-locales && \
-	cd musl-locales && cmake -DLOCALE_PROFILE=OFF -DCMAKE_INSTALL_PREFIX:PATH=/usr . && make && make install && \
-	cd .. && rm -r musl-locales && \
-	apk del .locale_build
-
+	ln -s /usr/lib/nginx/modules/ /etc/nginx/modules
+	
 COPY conf/etc/nginx/custom /etc/nginx/custom
 COPY conf/etc/nginx/geoip2 /etc/nginx/geoip2
 COPY conf/etc/nginx/global /etc/nginx/global
