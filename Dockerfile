@@ -3,12 +3,15 @@ FROM maurosoft1973/alpine:3.11.5-amd64
 ENV MAXMIND_VERSION=1.4.2
 ENV NGINX_VERSION=1.17.9
 	
+# set our environment variable
+ENV MUSL_LOCPATH="/usr/share/i18n/locales/musl"
+
 ARG BUILD_DATE
 
 LABEL maintainer="Mauro Cardillo <mauro.cardillo@gmail.com>" \
   architecture="amd64/x86_64" \
   alpine-version="3.11.5" \
-  build="05-Apr-2020" \
+  build="07-May-2020" \
   org.opencontainers.image.title="Alpine Nginx" \
   org.opencontainers.image.description="Nginx Docker image running on Alpine Linux" \
   org.opencontainers.image.authors="Mauro Cardillo <mauro.cardillo@gmail.com>" \
@@ -112,7 +115,13 @@ RUN \
 	mkdir /etc/nginx/conf.d && \
 	mkdir /etc/nginx/geoip2 && \
 	mkdir /etc/nginx/sites-enabled && \
-	ln -s /usr/lib/nginx/modules/ /etc/nginx/modules	
+	ln -s /usr/lib/nginx/modules/ /etc/nginx/modules && \
+	apk --no-cache add libintl && \
+	apk --no-cache --virtual .locale_build add cmake make musl-dev gcc gettext-dev git && \
+	git clone https://gitlab.com/rilian-la-te/musl-locales && \
+	cd musl-locales && cmake -DLOCALE_PROFILE=OFF -DCMAKE_INSTALL_PREFIX:PATH=/usr . && make && make install && \
+	cd .. && rm -r musl-locales && \
+	apk del .locale_build
 
 COPY conf/etc/nginx/custom /etc/nginx/custom
 COPY conf/etc/nginx/geoip2 /etc/nginx/geoip2
