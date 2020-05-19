@@ -1,22 +1,19 @@
-FROM maurosoft1973/alpine:3.11.6-amd64
+FROM maurosoft1973/alpine
 
 ENV MAXMIND_VERSION=1.4.2
-ENV NGINX_VERSION=1.17.9
+ENV NGINX_VERSION=1.18.0
 	
-# set our environment variable
-ENV MUSL_LOCPATH="/usr/share/i18n/locales/musl"
-
 ARG BUILD_DATE
 
 LABEL maintainer="Mauro Cardillo <mauro.cardillo@gmail.com>" \
   architecture="amd64/x86_64" \
-  alpine-version="3.11.5" \
-  build="07-May-2020" \
+  alpine-version="3.11.6" \
+  build="19-May-2020" \
   org.opencontainers.image.title="Alpine Nginx" \
   org.opencontainers.image.description="Nginx Docker image running on Alpine Linux" \
   org.opencontainers.image.authors="Mauro Cardillo <mauro.cardillo@gmail.com>" \
   org.opencontainers.image.vendor="Mauro Cardillo" \
-  org.opencontainers.image.version="v1.17.9" \
+  org.opencontainers.image.version="v1.18.0" \
   org.opencontainers.image.url="https://hub.docker.com/r/maurosoft1973/alpine-nginx/" \
   org.opencontainers.image.source="https://github.com/maurosoft1973/alpine-nginx" \
   org.opencontainers.image.created=$BUILD_DATE
@@ -26,14 +23,8 @@ RUN \
 	adduser -s /bin/false -H -u 33 -D www-data && \
 	mkdir -p /var/run/nginx/ && \
 	build_pkgs="build-base linux-headers openssl-dev pcre-dev gd-dev libxslt-dev wget zlib-dev" && \
-	runtime_pkgs="ca-certificates libmaxminddb openssl gd libxslt pcre zlib tzdata git" && \
+	runtime_pkgs="ca-certificates libmaxminddb openssl gd libxslt pcre zlib git" && \
 	apk --no-cache add ${build_pkgs} ${runtime_pkgs} && \
-	apk --no-cache add libintl && \
-	apk --no-cache --virtual .locale_build add cmake make musl-dev gcc gettext-dev git && \
-	git clone https://gitlab.com/rilian-la-te/musl-locales && \
-	cd musl-locales && cmake -DLOCALE_PROFILE=OFF -DCMAKE_INSTALL_PREFIX:PATH=/usr . && make && make install && \
-	cd .. && rm -r musl-locales && \
-	apk del .locale_build && \
 	cd /tmp && \
 	git clone https://github.com/leev/ngx_http_geoip2_module /ngx_http_geoip2_module && \
 	wget https://github.com/maxmind/libmaxminddb/releases/download/${MAXMIND_VERSION}/libmaxminddb-${MAXMIND_VERSION}.tar.gz && \
@@ -129,10 +120,10 @@ COPY conf/etc/nginx/global /etc/nginx/global
 COPY conf/etc/nginx/nginx.conf /etc/nginx/nginx.conf
 COPY conf/etc/nginx/dhparams.pem /etc/nginx/dhparams.pem
 
-ADD files/run.sh /scripts/run.sh
+ADD files/run-alpine-nginx.sh /scripts/run-alpine-nginx.sh
 
 RUN chmod -R 755 /scripts
 
 VOLUME ["/var/www","/etc/nginx/sites-enabled"]
 
-ENTRYPOINT ["/scripts/run.sh"]
+ENTRYPOINT ["/scripts/run-alpine-nginx.sh"]
