@@ -1,19 +1,19 @@
 FROM maurosoft1973/alpine
 
 ENV MAXMIND_VERSION=1.4.2
-ENV NGINX_VERSION=1.18.0
+ENV NGINX_VERSION=1.19.0
 	
 ARG BUILD_DATE
 
 LABEL maintainer="Mauro Cardillo <mauro.cardillo@gmail.com>" \
   architecture="amd64/x86_64" \
-  alpine-version="3.11.6" \
-  build="19-May-2020" \
+  alpine-version="3.12.0" \
+  build="06-Jul-2020" \
   org.opencontainers.image.title="Alpine Nginx" \
   org.opencontainers.image.description="Nginx Docker image running on Alpine Linux" \
   org.opencontainers.image.authors="Mauro Cardillo <mauro.cardillo@gmail.com>" \
   org.opencontainers.image.vendor="Mauro Cardillo" \
-  org.opencontainers.image.version="v1.18.0" \
+  org.opencontainers.image.version="v1.19.0" \
   org.opencontainers.image.url="https://hub.docker.com/r/maurosoft1973/alpine-nginx/" \
   org.opencontainers.image.source="https://github.com/maurosoft1973/alpine-nginx" \
   org.opencontainers.image.created=$BUILD_DATE
