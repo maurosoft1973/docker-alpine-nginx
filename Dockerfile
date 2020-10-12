@@ -1,7 +1,7 @@
 FROM maurosoft1973/alpine
 
 ENV MAXMIND_VERSION=1.4.2
-ENV NGINX_VERSION=1.19.0
+ENV NGINX_VERSION=1.19.3
 
 ARG BUILD_DATE
 
@@ -13,7 +13,7 @@ LABEL maintainer="Mauro Cardillo <mauro.cardillo@gmail.com>" \
     org.opencontainers.image.description="Nginx Docker image running on Alpine Linux" \
     org.opencontainers.image.authors="Mauro Cardillo <mauro.cardillo@gmail.com>" \
     org.opencontainers.image.vendor="Mauro Cardillo" \
-    org.opencontainers.image.version="v1.19.0" \
+    org.opencontainers.image.version="v${NGINX_VERSION}" \
     org.opencontainers.image.url="https://hub.docker.com/r/maurosoft1973/alpine-nginx/" \
     org.opencontainers.image.source="https://github.com/maurosoft1973/alpine-nginx" \
     org.opencontainers.image.created=$BUILD_DATE

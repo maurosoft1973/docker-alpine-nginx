@@ -6,6 +6,7 @@
 # Default values of arguments
 IMAGE=maurosoft1973/alpine-nginx:test
 CONTAINER=alpine-nginx-test
+DEBUG=0
 LC_ALL=it_IT.UTF-8
 TIMEZONE=Europe/Rome
 IP=0.0.0.0
