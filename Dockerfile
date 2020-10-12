@@ -8,7 +8,7 @@ ARG BUILD_DATE
 LABEL maintainer="Mauro Cardillo <mauro.cardillo@gmail.com>" \
     architecture="amd64/x86_64" \
     alpine-version="3.12.0" \
-    build="08-Oct-2020" \
+    build="$BUILD_DATE" \
     org.opencontainers.image.title="Alpine Nginx" \
     org.opencontainers.image.description="Nginx Docker image running on Alpine Linux" \
     org.opencontainers.image.authors="Mauro Cardillo <mauro.cardillo@gmail.com>" \

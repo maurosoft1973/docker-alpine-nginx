@@ -29,3 +29,15 @@ latest build:
   - docker push maurosoft1973/alpine-nginx:amd64
   - docker push maurosoft1973/alpine-nginx:x86_64
   - docker push maurosoft1973/alpine-nginx
+
+1.19.0 build:
+  stage: Build e Push image
+  only:
+  - master
+  script:
+  - BUILD_DATE=$(date +"%Y-%m-%d")
+  - docker build --build-arg BUILD_DATE=$BUILD_DATE -t maurosoft1973/alpine-nginx:1.19.0 -t maurosoft1973/alpine-nginx:1.19.0-amd64 -t maurosoft1973/alpine-nginx:1.19.0-x86_64 .
+  - echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_USER" --password-stdin
+  - docker push maurosoft1973/alpine-nginx:1.19.0-amd64
+  - docker push maurosoft1973/alpine-nginx:1.19.0-x86_64
+  - docker push maurosoft1973/alpine-nginx:1.19.0

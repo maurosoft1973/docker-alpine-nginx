@@ -1,5 +1,6 @@
 #!/bin/sh
 
+DEBUG=${DEBUG:-"0"}
 WWW_USER=${WWW_USER:-"www"}
 WWW_USER_UID=${WWW_USER_UID:-"5001"}
 WWW_GROUP=${WWW_GROUP:-"www-data"}
@@ -16,29 +17,23 @@ else
     echo -e "Skipping,user $WWW_USER exist"
 fi
 
-CHECK=$(cat /etc/passwd | grep $WWW_GROUP | wc -l)
+#Create Group (if not exist)
+CHECK=$(cat /etc/group | grep $WWW_GROUP | wc -l)
 if [ ${CHECK} == 0 ]; then
-    echo "Create User $WWW_GROUP with uid $WWW_GROUP_UID"
-    adduser -s /bin/false -H -u ${WWW_GROUP_UID} -D ${WWW_GROUP}
+    echo "Create group $WWW_GROUP with uid $WWW_GROUP_UID"
+    addgroup -g ${WWW_GROUP_UID} ${WWW_GROUP}
 else
-    echo -e "Skipping,user $WWW_GROUP exist"
+    echo -e "Skipping,group $WWW_GROUP exist"
 fi
 
 echo "Change user for nginx process at $WWW_USER"
 sed "s/user {user}/user ${WWW_USER}/g" /etc/nginx/nginx.conf > /tmp/nginx.conf
 cp /tmp/nginx.conf /etc/nginx/nginx.conf
 
-#echo "Download Geo DB"
-#if [ ! -f "/etc/nginx/geoip2/GeoLite2-ASN.mmdb" ]; then
-#    wget https://gitlab.com/maurosoft1973-docker/alpine-nginx/-/raw/master/conf/etc/nginx/geoip2/GeoLite2-ASN.mmdb -O /etc/nginx/geoip2/GeoLite2-ASN.mmdb
-#fi
+echo "Listen on $IP:$PORT"
 
-#if [ ! -f "/etc/nginx/geoip2/GeoLite2-City.mmdb" ]; then
-#    wget https://gitlab.com/maurosoft1973-docker/alpine-nginx/-/raw/master/conf/etc/nginx/geoip2/GeoLite2-City.mmdb -O /etc/nginx/geoip2/GeoLite2-City.mmdb
-#fi
-
-#if [ ! -f "/etc/nginx/geoip2/GeoLite2-Country.mmdb" ]; then
-#    wget https://gitlab.com/maurosoft1973-docker/alpine-nginx/-/raw/master/conf/etc/nginx/geoip2/GeoLite2-Country.mmdb -O /etc/nginx/geoip2/GeoLite2-Country.mmdb
-#fi
-
-/usr/sbin/nginx -c /etc/nginx/nginx.conf
+if [ "${DEBUG}" -eq "0" ]; then
+    /usr/sbin/nginx -c /etc/nginx/nginx.conf
+else
+   /bin/sh
+fi

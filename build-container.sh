@@ -21,6 +21,10 @@ WWW_GROUP_UID=33
 for arg in "$@"
 do
 	case $arg in
+    -d=*|--debug=*)
+    DEBUG="${arg#*=}"
+    shift # Remove
+    ;;
 		-c=*|--container=*)
 		CONTAINER="${arg#*=}"
 		shift # Remove
@@ -60,6 +64,7 @@ do
 		-h|--help)
 		echo -e "usage "
 		echo -e "$0 "
+    echo -e "  -d=|--debug=${DEBUG} -> debug mode"
 		echo -e "  -c=|--container=${CONTAINER} -> name of container"
 		echo -e "  -l=|--lc_all=${LC_ALL} -> locale"
 		echo -e "  -t=|--timezone=${TIMEZONE} -> timezone"
@@ -88,20 +93,20 @@ echo "# WWW Group           : $WWW_GROUP"
 echo "# WWW Group UID       : $WWW_GROUP_UID"
 
 echo -e "Check if container ${CONTAINER} exist"
-CHECK=$(docker container ps -a | grep ${CONTAINER} | wc -l)
-if [ ${CHECK} == 1 ]; then
-	echo -e "Stop Container -> ${CONTAINER}"
-	docker stop ${CONTAINER} > /dev/null
+CHECK=$(docker container ps -a -f "name=${CONTAINER}" | wc -l)
+if [ ${CHECK} == 2 ]; then
+	  echo -e "Stop Container -> ${CONTAINER}"
+	  docker stop ${CONTAINER} > /dev/null
 
-	echo -e "Remove Container -> ${CONTAINER}"
-	docker container rm ${CONTAINER} > /dev/null
-else 
-	echo -e "The container ${CONTAINER} not exist"
+	  echo -e "Remove Container -> ${CONTAINER}"
+	  docker container rm ${CONTAINER} > /dev/null
+else
+	  echo -e "The container ${CONTAINER} not exist"
 fi
 
 docker pull ${IMAGE}
 echo -e "Create and run container"
-docker run -dit --name ${CONTAINER} -p ${IP}:${PORT}:80 -v ${WWW}:/var/www -v ${NGINX_SITES_ENABLED}:/etc/nginx/sites-enabled -e LC_ALL=${LC_ALL} -e TIMEZONE=${TIMEZONE} -e WWW_USER=${WWW_USER} -e WWW_USER_UID=${WWW_USER_UID} -e WWW_GROUP=${WWW_GROUP} -e WWW_GROUP_UID=${WWW_GROUP_UID} -e IP=${IP} -e PORT=${PORT} ${IMAGE}
+docker run -dit --name ${CONTAINER} -p ${IP}:${PORT}:80 -v ${WWW}:/var/www -v ${NGINX_SITES_ENABLED}:/etc/nginx/sites-enabled -e DEBUG=${DEBUG} -e LC_ALL=${LC_ALL} -e TIMEZONE=${TIMEZONE} -e WWW_USER=${WWW_USER} -e WWW_USER_UID=${WWW_USER_UID} -e WWW_GROUP=${WWW_GROUP} -e WWW_GROUP_UID=${WWW_GROUP_UID} -e IP=${IP} -e PORT=${PORT} ${IMAGE}
 
 echo -e "Sleep 5 second"
 sleep 5
