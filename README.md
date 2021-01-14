@@ -10,7 +10,7 @@
 This Docker image [(maurosoft1973/alpine-nginx)](https://hub.docker.com/r/maurosoft1973/alpine-nginx/) is based on the minimal [Alpine Linux](https://alpinelinux.org/) with [Nginx v1.19.3](https://nginx.org/) web server.
 
 ##### Alpine Version 3.12.3 (Released Dec 16, 2020)
-##### Nginx Version 1.19.3
+##### Nginx Version 1.19.6
 
 ----
 
