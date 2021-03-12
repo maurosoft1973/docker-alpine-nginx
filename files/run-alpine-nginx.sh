@@ -8,15 +8,6 @@ WWW_GROUP_UID=${WWW_GROUP_UID:-"33"}
 
 source /scripts/init-alpine.sh
 
-#Create User (if not exist)
-CHECK=$(cat /etc/passwd | grep $WWW_USER | wc -l)
-if [ ${CHECK} == 0 ]; then
-    echo "Create User $WWW_USER with uid $WWW_USER_UID"
-    adduser -s /bin/false -H -u ${WWW_USER_UID} -D ${WWW_USER}
-else
-    echo -e "Skipping,user $WWW_USER exist"
-fi
-
 #Create Group (if not exist)
 CHECK=$(cat /etc/group | grep $WWW_GROUP | wc -l)
 if [ ${CHECK} == 0 ]; then
@@ -24,6 +15,15 @@ if [ ${CHECK} == 0 ]; then
     addgroup -g ${WWW_GROUP_UID} ${WWW_GROUP}
 else
     echo -e "Skipping,group $WWW_GROUP exist"
+fi
+
+#Create User (if not exist)
+CHECK=$(cat /etc/passwd | grep $WWW_USER | wc -l)
+if [ ${CHECK} == 0 ]; then
+    echo "Create User $WWW_USER with uid $WWW_USER_UID"
+    adduser -s /bin/false -H -u ${WWW_USER_UID} -D -G ${WWW_GROUP} ${WWW_USER}
+else
+    echo -e "Skipping,user $WWW_USER exist"
 fi
 
 echo "Change user for nginx process at $WWW_USER"

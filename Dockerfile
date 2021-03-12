@@ -1,12 +1,14 @@
 FROM maurosoft1973/alpine
 
 ENV MAXMIND_VERSION=1.5.0
-ENV NGINX_VERSION=1.19.6
+ENV NGINX_VERSION=1.19.8
 
 ARG BUILD_DATE
 
-LABEL maintainer="Mauro Cardillo <mauro.cardillo@gmail.com>" \
+LABEL \
+    maintainer="Mauro Cardillo <mauro.cardillo@gmail.com>" \
     architecture="amd64/x86_64" \
+    nginx-version="${NGINX_VERSION}" \
     alpine-version="3.12.3" \
     build="$BUILD_DATE" \
     org.opencontainers.image.title="Alpine Nginx" \
@@ -23,17 +25,8 @@ RUN \
     adduser -s /bin/false -H -u 33 -D www-data && \
     mkdir -p /var/run/nginx/ && \
     build_pkgs="build-base linux-headers openssl-dev pcre-dev gd-dev libxslt-dev wget zlib-dev" && \
-    runtime_pkgs="ca-certificates libmaxminddb openssl gd libxslt pcre zlib git" && \
+    runtime_pkgs="ca-certificates openssl gd libxslt pcre zlib git" && \
     apk --no-cache add ${build_pkgs} ${runtime_pkgs} && \
-    cd /tmp && \
-    git clone https://github.com/leev/ngx_http_geoip2_module /ngx_http_geoip2_module && \
-    wget https://github.com/maxmind/libmaxminddb/releases/download/${MAXMIND_VERSION}/libmaxminddb-${MAXMIND_VERSION}.tar.gz && \
-    tar xf libmaxminddb-${MAXMIND_VERSION}.tar.gz && \
-    cd /tmp/libmaxminddb-${MAXMIND_VERSION} && \
-    ./configure && \
-    make && \
-    make check && \
-    make install && \
     cd /tmp && \
     wget https://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz && \
     tar xzf nginx-${NGINX_VERSION}.tar.gz && \
@@ -80,7 +73,6 @@ RUN \
     --with-stream_ssl_preread_module \
     --with-compat \
     --with-http_v2_module \
-    --add-dynamic-module=/ngx_http_geoip2_module \
     --http-client-body-temp-path=/var/cache/nginx/client_temp \
     --http-proxy-temp-path=/var/cache/nginx/proxy_temp \
     --http-fastcgi-temp-path=/var/cache/nginx/fastcgi_temp \
@@ -93,7 +85,6 @@ RUN \
     rm -rf /tmp/* && \
     apk del ${build_pkgs} && \
     rm -rf /var/cache/apk/* && \
-    rm -rf /ngx_http_geoip2_module && \
     rm /etc/nginx/fastcgi.conf && \
     rm /etc/nginx/fastcgi.conf.default && \
     rm /etc/nginx/fastcgi_params && \
@@ -110,16 +101,14 @@ RUN \
     rm /etc/nginx/nginx.conf && \
     rm /etc/nginx/nginx.conf.default && \
     mkdir /etc/nginx/conf.d && \
-    mkdir /etc/nginx/geoip2 && \
     mkdir /etc/nginx/sites-enabled && \
     mkdir -p /etc/ssl/domain && \
     ln -s /usr/lib/nginx/modules/ /etc/nginx/modules
 
-COPY conf/etc/nginx/custom /etc/nginx/custom
-COPY conf/etc/nginx/geoip2 /etc/nginx/geoip2
-COPY conf/etc/nginx/global /etc/nginx/global
-COPY conf/etc/nginx/nginx.conf /etc/nginx/nginx.conf
-COPY conf/etc/nginx/dhparams.pem /etc/nginx/dhparams.pem
+COPY conf/base/etc/nginx/custom /etc/nginx/custom
+COPY conf/base/etc/nginx/global /etc/nginx/global
+COPY conf/base/etc/nginx/nginx.conf /etc/nginx/nginx.conf
+COPY conf/base/etc/nginx/dhparams.pem /etc/nginx/dhparams.pem
 
 ADD files/run-alpine-nginx.sh /scripts/run-alpine-nginx.sh
 

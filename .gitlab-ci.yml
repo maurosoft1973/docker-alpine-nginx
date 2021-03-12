@@ -24,20 +24,28 @@ latest build:
   - master
   script:
   - BUILD_DATE=$(date +"%Y-%m-%d")
-  - docker build --build-arg BUILD_DATE=$BUILD_DATE -t maurosoft1973/alpine-nginx -t maurosoft1973/alpine-nginx:amd64 -t maurosoft1973/alpine-nginx:x86_64 .
+  - docker build --build-arg BUILD_DATE=$BUILD_DATE -t maurosoft1973/alpine-nginx -t maurosoft1973/alpine-nginx:amd64 -t maurosoft1973/alpine-nginx:x86_64 -f ./Dockerfile .
+  - docker build --build-arg BUILD_DATE=$BUILD_DATE -t maurosoft1973/alpine-nginx:geo -t maurosoft1973/alpine-nginx:geo-amd64 -t maurosoft1973/alpine-nginx:geo-x86_64 -f ./DockerfileGeo .
   - echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_USER" --password-stdin
   - docker push maurosoft1973/alpine-nginx:amd64
   - docker push maurosoft1973/alpine-nginx:x86_64
   - docker push maurosoft1973/alpine-nginx
+  - docker push maurosoft1973/alpine-nginx:geo-amd64
+  - docker push maurosoft1973/alpine-nginx:geo-x86_64
+  - docker push maurosoft1973/alpine-nginx:geo
 
-1.19.6 build:
+1.19.8 build:
   stage: Build e Push image
   only:
   - master
   script:
   - BUILD_DATE=$(date +"%Y-%m-%d")
-  - docker build --build-arg BUILD_DATE=$BUILD_DATE -t maurosoft1973/alpine-nginx:1.19.6 -t maurosoft1973/alpine-nginx:1.19.6-amd64 -t maurosoft1973/alpine-nginx:1.19.6-x86_64 .
+  - docker build --build-arg BUILD_DATE=$BUILD_DATE -t maurosoft1973/alpine-nginx:1.19.8 -t maurosoft1973/alpine-nginx:1.19.8-amd64 -t maurosoft1973/alpine-nginx:1.19.8-x86_64 -f ./Dockerfile .
+  - docker build --build-arg BUILD_DATE=$BUILD_DATE -t maurosoft1973/alpine-nginx:geo-1.19.8 -t maurosoft1973/alpine-nginx:geo-1.19.8-amd64 -t maurosoft1973/alpine-nginx:geo-1.19.8-x86_64 -f ./DockerfileGeo .
   - echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_USER" --password-stdin
-  - docker push maurosoft1973/alpine-nginx:1.19.6-amd64
-  - docker push maurosoft1973/alpine-nginx:1.19.6-x86_64
-  - docker push maurosoft1973/alpine-nginx:1.19.6
+  - docker push maurosoft1973/alpine-nginx:1.19.8-amd64
+  - docker push maurosoft1973/alpine-nginx:1.19.8-x86_64
+  - docker push maurosoft1973/alpine-nginx:1.19.8
+  - docker push maurosoft1973/alpine-nginx:geo-1.19.8-amd64
+  - docker push maurosoft1973/alpine-nginx:geo-1.19.8-x86_64
+  - docker push maurosoft1973/alpine-nginx:geo-1.19.8

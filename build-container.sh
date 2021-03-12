@@ -22,10 +22,10 @@ WWW_GROUP_UID=33
 for arg in "$@"
 do
 	case $arg in
-    -d=*|--debug=*)
-    DEBUG="${arg#*=}"
-    shift # Remove
-    ;;
+		-d=*|--debug=*)
+		DEBUG="${arg#*=}"
+		shift # Remove
+		;;
 		-c=*|--container=*)
 		CONTAINER="${arg#*=}"
 		shift # Remove
@@ -65,7 +65,7 @@ do
 		-h|--help)
 		echo -e "usage "
 		echo -e "$0 "
-    echo -e "  -d=|--debug=${DEBUG} -> debug mode"
+    	echo -e "  -d=|--debug=${DEBUG} -> debug mode"
 		echo -e "  -c=|--container=${CONTAINER} -> name of container"
 		echo -e "  -l=|--lc_all=${LC_ALL} -> locale"
 		echo -e "  -t=|--timezone=${TIMEZONE} -> timezone"

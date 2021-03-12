@@ -7,10 +7,10 @@
 [![Alpine Version](https://img.shields.io/badge/Alpine%20version-v3.12.3-green.svg?style=for-the-badge)](https://alpinelinux.org/)
 
 
-This Docker image [(maurosoft1973/alpine-nginx)](https://hub.docker.com/r/maurosoft1973/alpine-nginx/) is based on the minimal [Alpine Linux](https://alpinelinux.org/) with [Nginx v1.19.6](https://nginx.org/) web server.
+This Docker image [(maurosoft1973/alpine-nginx)](https://hub.docker.com/r/maurosoft1973/alpine-nginx/) is based on the minimal [Alpine Linux](https://alpinelinux.org/) with [Nginx v1.19.8](https://nginx.org/) web server.
 
-##### Alpine Version 3.12.3 (Released Dec 16, 2020)
-##### Nginx Version 1.19.6
+##### Alpine Version 3.13.2 (Released Feb 17, 2021)
+##### Nginx Version 1.19.8
 
 ----
 
