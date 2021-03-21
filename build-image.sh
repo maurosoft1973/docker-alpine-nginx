@@ -142,7 +142,7 @@ else
 
     echo "Build Image: ${IMAGE} -> ${RELEASE}"
     docker build --build-arg BUILD_DATE=${BUILD_DATE} --build-arg ALPINE_VERSION=${ALPINE_VERSION} --build-arg NGINX_VERSION=${NGINX_VERSION} --build-arg MAXMIND_VERSION=${MAXMIND_VERSION} -t ${IMAGE}:latest -t ${IMAGE}:amd64 -t ${IMAGE}:x86_64 -f ./Dockerfile .
-    docker build --build-arg BUILD_DATE=${BUILD_DATE} --build-arg ALPINE_VERSION=${ALPINE_VERSION} --build-arg NGINX_VERSION=${NGINX_VERSION} --build-arg MAXMIND_VERSION=${MAXMIND_VERSION} -t ${IMAGE}:geo-latest -t ${IMAGE}:geo-amd64 -t ${IMAGE}:geo-x86_64 -f ./DockerfileGeo .
+    docker build --build-arg BUILD_DATE=${BUILD_DATE} --build-arg ALPINE_VERSION=${ALPINE_VERSION} --build-arg NGINX_VERSION=${NGINX_VERSION} --build-arg MAXMIND_VERSION=${MAXMIND_VERSION} -t ${IMAGE}:geo -t ${IMAGE}:geo-amd64 -t ${IMAGE}:geo-x86_64 -f ./DockerfileGeo .
 
     echo "Login Docker HUB"
     echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_USER" --password-stdin
