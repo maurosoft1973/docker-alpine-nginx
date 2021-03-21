@@ -4,21 +4,13 @@ stages:
     - Build e Push image
     - Documentation
 
-variables:
-    ALPINE_VERSION1: "3.13.2"
-    ALPINE_VERSION_DATE1: "Feb, 17 2021"
-    NGINX_VERSION1: "1.19.8"
-    NGINX_VERSION_DATE1: "Mar, 9 2021"
-    MAXMIND_VERSION1: "1.5.0"
-
 before_script:
     - apk add bash
+    - echo "Read Environment Variable from .env file"
     - source ./.env
-    - export CI_NGINX_VERSION=${NGINX_VERSION:-"$NGINX_VERSION"}
-    - export CI_NGINX_VERSION_DATE=${NGINX_VERSION_DATE:-"$NGINX_VERSION_DATE"}
-    - export CI_MAXMIND_VERSION=${MAXMIND_VERSION:-"$MAXMIND_VERSION"}
-    - export
-    - exit 0
+    - export JOB_NGINX_VERSION=${CI_NGINX_VERSION:-"$NGINX_VERSION"}
+    - export JOB_NGINX_VERSION_DATE=${CI_NGINX_VERSION_DATE:-"$NGINX_VERSION_DATE"}
+    - export JOB_MAXMIND_VERSION=${CI_MAXMIND_VERSION:-"$MAXMIND_VERSION"}
 
 update readme:
     stage: Documentation
@@ -51,7 +43,7 @@ amd64 test build:
     variables:
         RELEASE: "TEST"
     script:
-        - bash ./build-image.sh -av=$ALPINE_VERSION -avd=$ALPINE_VERSION_DATE -nv=$CI_NGINX_VERSION -nvd=$CI_NGINX_VERSION_DATE -mv=$CI_MAXMIND_VERSION -r=$RELEASE
+        - bash ./build-image.sh -av=$ALPINE_VERSION -avd=$ALPINE_VERSION_DATE -nv=$JOB_NGINX_VERSION -nvd=$JOB_NGINX_VERSION_DATE -mv=$JOB_MAXMIND_VERSION -r=$RELEASE
 
 amd64 current build:
     stage: Build e Push image
@@ -60,7 +52,7 @@ amd64 current build:
     only:
         - master
     script:
-        - bash ./build-image.sh -av=$ALPINE_VERSION -avd=$ALPINE_VERSION_DATE -nv=$CI_NGINX_VERSION -nvd=$CI_NGINX_VERSION_DATE -mv=$CI_MAXMIND_VERSION -r=$RELEASE
+        - bash ./build-image.sh -av=$ALPINE_VERSION -avd=$ALPINE_VERSION_DATE -nv=$JOB_NGINX_VERSION -nvd=$JOB_NGINX_VERSION_DATE -mv=$JOB_MAXMIND_VERSION -r=$RELEASE
 
 amd64 latest build:
     stage: Build e Push image
@@ -69,5 +61,5 @@ amd64 latest build:
     only:
         - master
     script:
-        - bash ./build-image.sh -av=$ALPINE_VERSION -avd=$ALPINE_VERSION_DATE -nv=$CI_NGINX_VERSION -nvd=$CI_NGINX_VERSION_DATE -mv=$CI_MAXMIND_VERSION -r=$RELEASE
+        - bash ./build-image.sh -av=$ALPINE_VERSION -avd=$ALPINE_VERSION_DATE -nv=$JOB_NGINX_VERSION -nvd=$JOB_NGINX_VERSION_DATE -mv=$JOB_MAXMIND_VERSION -r=$RELEASE
 
