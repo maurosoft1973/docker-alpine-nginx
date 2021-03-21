@@ -71,17 +71,17 @@ if [ "$RELEASE" == "TEST" ]; then
     echo "Login Docker HUB"
     echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_USER" --password-stdin
 
-    echo "Push Image -> ${IMAGE}:${NGINX_VERSION}-test"
-    docker push ${IMAGE}:${NGINX_VERSION}-test
-
-    echo "Push Image -> ${IMAGE}:test"
-    docker push ${IMAGE}:test
-
     echo "Push Image -> ${IMAGE}:geo-${NGINX_VERSION}-test"
     docker push ${IMAGE}:geo-${NGINX_VERSION}-test
 
     echo "Push Image -> ${IMAGE}:geo-test"
     docker push ${IMAGE}:geo-test
+
+    echo "Push Image -> ${IMAGE}:${NGINX_VERSION}-test"
+    docker push ${IMAGE}:${NGINX_VERSION}-test
+
+    echo "Push Image -> ${IMAGE}:test"
+    docker push ${IMAGE}:test
 elif [ "$RELEASE" == "CURRENT" ]; then
     echo "Remove image ${IMAGE}:${NGINX_VERSION}"
     docker rmi -f ${IMAGE}:${NGINX_VERSION} > /dev/null 2>&1
@@ -108,15 +108,6 @@ elif [ "$RELEASE" == "CURRENT" ]; then
     echo "Login Docker HUB"
     echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_USER" --password-stdin
 
-    echo "Push Image -> ${IMAGE}:${NGINX_VERSION}"
-    docker push ${IMAGE}:${NGINX_VERSION}
-
-    echo "Push Image -> ${IMAGE}:${NGINX_VERSION}-amd64"
-    docker push ${IMAGE}:${NGINX_VERSION}-amd64
-
-    echo "Push Image -> ${IMAGE}:${NGINX_VERSION}-x86_64"
-    docker push ${IMAGE}:${NGINX_VERSION}-x86_64
-
     echo "Push Image -> ${IMAGE}:geo-${NGINX_VERSION}-amd64"
     docker push ${IMAGE}:geo-${NGINX_VERSION}-amd64
 
@@ -125,6 +116,15 @@ elif [ "$RELEASE" == "CURRENT" ]; then
 
     echo "Push Image -> ${IMAGE}:geo-${NGINX_VERSION}"
     docker push ${IMAGE}:geo-${NGINX_VERSION}
+
+    echo "Push Image -> ${IMAGE}:${NGINX_VERSION}-amd64"
+    docker push ${IMAGE}:${NGINX_VERSION}-amd64
+
+    echo "Push Image -> ${IMAGE}:${NGINX_VERSION}-x86_64"
+    docker push ${IMAGE}:${NGINX_VERSION}-x86_64
+
+    echo "Push Image -> ${IMAGE}:${NGINX_VERSION}"
+    docker push ${IMAGE}:${NGINX_VERSION}
 else
     echo "Remove image ${IMAGE}:latest"
     docker rmi -f ${IMAGE}:latest > /dev/null 2>&1
@@ -151,15 +151,6 @@ else
     echo "Login Docker HUB"
     echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_USER" --password-stdin
 
-    echo "Push Image -> ${IMAGE}:latest"
-    docker push ${IMAGE}:latest
-
-    echo "Push Image -> ${IMAGE}:amd64"
-    docker push ${IMAGE}:amd64
-
-    echo "Push Image -> ${IMAGE}:x86_64"
-    docker push ${IMAGE}:x86_64
-
     echo "Push Image -> ${IMAGE}:geo-amd64"
     docker push ${IMAGE}:geo-amd64
 
@@ -168,5 +159,14 @@ else
 
     echo "Push Image -> ${IMAGE}:geo"
     docker push ${IMAGE}:geo
+
+    echo "Push Image -> ${IMAGE}:amd64"
+    docker push ${IMAGE}:amd64
+
+    echo "Push Image -> ${IMAGE}:x86_64"
+    docker push ${IMAGE}:x86_64
+
+    echo "Push Image -> ${IMAGE}:latest"
+    docker push ${IMAGE}:latest
 fi
 
