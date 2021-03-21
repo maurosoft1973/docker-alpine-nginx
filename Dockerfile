@@ -1,15 +1,15 @@
 FROM maurosoft1973/alpine
 
-ENV MAXMIND_VERSION=1.5.0
-ENV NGINX_VERSION=1.19.8
-
 ARG BUILD_DATE
+ARG ALPINE_VERSION
+ARG MAXMIND_VERSION
+ARG NGINX_VERSION
 
 LABEL \
     maintainer="Mauro Cardillo <mauro.cardillo@gmail.com>" \
     architecture="amd64/x86_64" \
     nginx-version="${NGINX_VERSION}" \
-    alpine-version="3.12.3" \
+    alpine-version="${ALPINE_VERSION}" \
     build="$BUILD_DATE" \
     org.opencontainers.image.title="Alpine Nginx" \
     org.opencontainers.image.description="Nginx Docker image running on Alpine Linux" \

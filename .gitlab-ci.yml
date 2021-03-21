@@ -1,51 +1,65 @@
 image: docker:stable
 
 stages:
-  - Build e Push image
-  - Documentation
+    - Build e Push image
+    - Documentation
+
+variables:
+    ALPINE_VERSION: "3.13.2"
+    ALPINE_VERSION_DATE: "Feb, 17 2021"
+    NGINX_VERSION: "1.19.8"
+    MAXMIND_VERSION: "1.5.0"
 
 update readme:
-  stage: Documentation
-  variables:
-    DOCKERHUB_USERNAME: "$DOCKER_HUB_USER"
-    DOCKERHUB_PASSWORD: "$DOCKER_HUB_PASSWORD"
-    DOCKERHUB_REPO_PREFIX: "maurosoft1973"
-    DOCKERHUB_REPO_NAME: "alpine-nginx"
-  only:
-  - master
-  script:
-  - FULL_DESCRIPTION=$(if [ -f "$(pwd)/README.md" ]; then cat "$(pwd)/README.md"; else echo ""; fi)
-  - docker pull maurosoft1973/alpine-readme-to-dockerhub:latest
-  - docker run --rm -e DOCKERHUB_USERNAME="$DOCKERHUB_USERNAME" -e DOCKERHUB_PASSWORD="$DOCKERHUB_PASSWORD" -e DOCKERHUB_REPO_PREFIX="$DOCKERHUB_REPO_PREFIX" -e DOCKERHUB_REPO_NAME="$DOCKERHUB_REPO_NAME" -e SHORT_DESCRIPTION="Nginx Docker image running on Alpine Linux" -e FULL_DESCRIPTION="$FULL_DESCRIPTION" maurosoft1973/alpine-readme-to-dockerhub
+    stage: Documentation
+    variables:
+        DOCKERHUB_USERNAME: "$DOCKER_HUB_USER"
+        DOCKERHUB_PASSWORD: "$DOCKER_HUB_PASSWORD"
+        DOCKERHUB_REPO_PREFIX: "maurosoft1973"
+        DOCKERHUB_REPO_NAME: "alpine-nginx"
+        DOCKERHUB_SHORT_DESCRIPTION: "Nginx Docker image running on Alpine Linux"
+    only:
+        - master
+    script:
+        - LATEST_UPDATE=$(date +"%d.%m.%Y %H:%M:%S")
+        - echo "Generate README for Version ${MARIADB_VERSION}"
+        - sed "s/\%ALPINE_VERSION\%/${ALPINE_VERSION}/g" README.tpl > README.md1
+        - sed "s/\%ALPINE_VERSION_DATE\%/${ALPINE_VERSION_DATE}/g" README.md1 > README.md2
+        - sed "s/\%NGINX_VERSION\%/${NGINX_VERSION}/g" README.md2 > README.md3
+        - sed "s/\%MAXMIND_VERSION\%/${MAXMIND_VERSION}/g" README.md3 > README.md4
+        - sed "s/\%LATEST_UPDATE\%/${LATEST_UPDATE}/g" README.md4 > README.md
+        - FULL_DESCRIPTION=$(if [ -f "$(pwd)/README.md" ]; then cat "$(pwd)/README.md"; else echo ""; fi)
+        - docker pull maurosoft1973/alpine-readme-to-dockerhub
+        - docker run --rm -e DOCKERHUB_USERNAME="$DOCKERHUB_USERNAME" -e DOCKERHUB_PASSWORD="$DOCKERHUB_PASSWORD" -e DOCKERHUB_REPO_PREFIX="$DOCKERHUB_REPO_PREFIX" -e DOCKERHUB_REPO_NAME="$DOCKERHUB_REPO_NAME" -e SHORT_DESCRIPTION="$DOCKERHUB_SHORT_DESCRIPTION" -e FULL_DESCRIPTION="$FULL_DESCRIPTION" maurosoft1973/alpine-readme-to-dockerhub
 
-latest build:
-  stage: Build e Push image
-  only:
-  - master
-  script:
-  - BUILD_DATE=$(date +"%Y-%m-%d")
-  - docker build --build-arg BUILD_DATE=$BUILD_DATE -t maurosoft1973/alpine-nginx -t maurosoft1973/alpine-nginx:amd64 -t maurosoft1973/alpine-nginx:x86_64 -f ./Dockerfile .
-  - docker build --build-arg BUILD_DATE=$BUILD_DATE -t maurosoft1973/alpine-nginx:geo -t maurosoft1973/alpine-nginx:geo-amd64 -t maurosoft1973/alpine-nginx:geo-x86_64 -f ./DockerfileGeo .
-  - echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_USER" --password-stdin
-  - docker push maurosoft1973/alpine-nginx:amd64
-  - docker push maurosoft1973/alpine-nginx:x86_64
-  - docker push maurosoft1973/alpine-nginx
-  - docker push maurosoft1973/alpine-nginx:geo-amd64
-  - docker push maurosoft1973/alpine-nginx:geo-x86_64
-  - docker push maurosoft1973/alpine-nginx:geo
+amd64 test build:
+    image: docker
+    stage: Build e Push image
+    only:
+        - master
+    variables:
+        RELEASE: "TEST"
+    script:
+        - apk add bash
+        - bash ./build-image.sh -av=$ALPINE_VERSION -avd=$ALPINE_VERSION_DATE -nv=$NGINX_VERSION -mv=$MAXMIND_VERSION -r=$RELEASE
 
-1.19.8 build:
-  stage: Build e Push image
-  only:
-  - master
-  script:
-  - BUILD_DATE=$(date +"%Y-%m-%d")
-  - docker build --build-arg BUILD_DATE=$BUILD_DATE -t maurosoft1973/alpine-nginx:1.19.8 -t maurosoft1973/alpine-nginx:1.19.8-amd64 -t maurosoft1973/alpine-nginx:1.19.8-x86_64 -f ./Dockerfile .
-  - docker build --build-arg BUILD_DATE=$BUILD_DATE -t maurosoft1973/alpine-nginx:geo-1.19.8 -t maurosoft1973/alpine-nginx:geo-1.19.8-amd64 -t maurosoft1973/alpine-nginx:geo-1.19.8-x86_64 -f ./DockerfileGeo .
-  - echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_USER" --password-stdin
-  - docker push maurosoft1973/alpine-nginx:1.19.8-amd64
-  - docker push maurosoft1973/alpine-nginx:1.19.8-x86_64
-  - docker push maurosoft1973/alpine-nginx:1.19.8
-  - docker push maurosoft1973/alpine-nginx:geo-1.19.8-amd64
-  - docker push maurosoft1973/alpine-nginx:geo-1.19.8-x86_64
-  - docker push maurosoft1973/alpine-nginx:geo-1.19.8
+amd64 current build:
+    stage: Build e Push image
+    variables:
+        RELEASE: "CURRENT"
+    only:
+        - master
+    script:
+        - apk add bash
+        - bash ./build-image.sh -av=$ALPINE_VERSION -avd=$ALPINE_VERSION_DATE -nv=$NGINX_VERSION -mv=$MAXMIND_VERSION -r=$RELEASE
+
+amd64 latest build:
+    stage: Build e Push image
+    variables:
+        RELEASE: "LATEST"
+    only:
+        - master
+    script:
+        - apk add bash
+        - bash ./build-image.sh -av=$ALPINE_VERSION -avd=$ALPINE_VERSION_DATE -nv=$NGINX_VERSION -mv=$MAXMIND_VERSION -r=$RELEASE
+
