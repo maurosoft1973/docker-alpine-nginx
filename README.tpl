@@ -10,8 +10,8 @@
 
 This Docker image [(maurosoft1973/alpine-nginx)](https://hub.docker.com/r/maurosoft1973/alpine-nginx/) is based on the minimal [Alpine Linux](https://alpinelinux.org/) with [Nginx v%NGINX_VERSION%](https://nginx.org/) web server.
 
-##### Alpine Version %ALPINE_VERSION% (Released Feb %ALPINE_VERSION_DATE%)
-##### Nginx Version %NGINX_VERSION% (Released Feb %NGINX_VERSION_DATE%)
+##### Alpine Version %ALPINE_VERSION% (Released %ALPINE_VERSION_DATE%)
+##### Nginx Version %NGINX_VERSION% (Released %NGINX_VERSION_DATE%)
 
 ----
 
