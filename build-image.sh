@@ -19,6 +19,10 @@ do
         NGINX_VERSION="${arg#*=}"
         shift # Remove
         ;;
+        -nvd=*|--nginx-version-date=*)
+        NGINX_VERSION_DATE="${arg#*=}"
+        shift # Remove
+        ;;
         -mv=*|--maxmind-version=*)
         MAXMIND_VERSION="${arg#*=}"
         shift # Remove
@@ -32,6 +36,7 @@ do
         echo -e "$0 "
         echo -e "  -av=|--alpine-version=${ALPINE_VERSION} -> alpine version"
         echo -e "  -nv=|--nginx-version=${NGINX_VERSION} -> nginx version"
+        echo -e "  -nvd=|--nginx-version-date=${NGINX_VERSION_DATE} -> nginx version date"
         echo -e "  -mv=|--maxmind-version=${MAXMIND_VERSION} -> maxmind version"
         echo -e "  -r=|--release=${RELEASE} -> release of image"
         exit 0
@@ -39,13 +44,12 @@ do
     esac
 done
 
-MARIADB_VERSION=${MARIADB_VERSIONS["$ALPINE_RELEASE"]}
-
 echo "# Image               : ${IMAGE}"
 echo "# Image Release       : ${RELEASE}"
 echo "# Build Date          : ${BUILD_DATE}"
 echo "# Alpine Version      : ${ALPINE_VERSION}"
 echo "# Nginx Version       : ${NGINX_VERSION}"
+echo "# Nginx Version Date  : ${NGINX_VERSION_DATE}"
 
 if [ "$RELEASE" == "TEST" ]; then
     echo "Remove image ${IMAGE}:test"

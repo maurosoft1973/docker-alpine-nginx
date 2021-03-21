@@ -25,7 +25,7 @@ RUN \
     adduser -s /bin/false -H -u 33 -D www-data && \
     mkdir -p /var/run/nginx/ && \
     build_pkgs="build-base linux-headers openssl-dev pcre-dev gd-dev libxslt-dev wget zlib-dev" && \
-    runtime_pkgs="ca-certificates openssl gd libxslt pcre zlib git" && \
+    runtime_pkgs="ca-certificates openssl gd libxslt pcre zlib git curl" && \
     apk --no-cache add ${build_pkgs} ${runtime_pkgs} && \
     cd /tmp && \
     wget https://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz && \
