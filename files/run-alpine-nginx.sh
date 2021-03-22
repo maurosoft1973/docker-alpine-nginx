@@ -21,7 +21,7 @@ fi
 CHECK=$(cat /etc/passwd | grep $WWW_USER | wc -l)
 if [ ${CHECK} == 0 ]; then
     echo "Create User $WWW_USER with uid $WWW_USER_UID"
-    adduser -s /bin/false -H -u ${WWW_USER_UID} -D -G ${WWW_GROUP} ${WWW_USER}
+    adduser -s /bin/false -H -u ${WWW_USER_UID} -D ${WWW_USER}
 else
     echo -e "Skipping,user $WWW_USER exist"
 fi
