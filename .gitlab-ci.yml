@@ -47,8 +47,6 @@ update readme:
         - ssh-keyscan -H gitlab.com >> ~/.ssh/known_hosts
         - echo -e "Setting permission for ~/.ssh/known_hosts (chmod 644)"
         - chmod 644 ~/.ssh/known_hosts
-        - echo -e "Test GILAB Access"
-        - ssh -T git@gitlab.com
         - git clone git@gitlab.com:maurosoft1973-docker/$DOCKERHUB_REPO_NAME.git /tmp/$DOCKERHUB_REPO_NAME
         - cd /tmp/$DOCKERHUB_REPO_NAME
         - LAST_UPDATE=$(date +"%d.%m.%Y %H:%M:%S")
