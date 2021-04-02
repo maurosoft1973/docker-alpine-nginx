@@ -4,13 +4,13 @@
 [![Docker Pulls](https://img.shields.io/docker/pulls/maurosoft1973/alpine-nginx.svg?style=for-the-badge&logo=docker)](https://hub.docker.com/r/maurosoft1973/alpine-nginx/)
 [![Docker Stars](https://img.shields.io/docker/stars/maurosoft1973/alpine-nginx.svg?style=for-the-badge&logo=docker)](https://hub.docker.com/r/maurosoft1973/alpine-nginx/)
 
-[![Alpine Version](https://img.shields.io/badge/Alpine%20version-v3.13.3-green.svg?style=for-the-badge)](https://alpinelinux.org/)
+[![Alpine Version](https://img.shields.io/badge/Alpine%20version-v3.13.4-green.svg?style=for-the-badge)](https://alpinelinux.org/)
 [![MariaDB Version](https://img.shields.io/docker/v/maurosoft1973/alpine-nginx?sort=semver&style=for-the-badge)](https://nginx.org/)
 
 
 This Docker image [(maurosoft1973/alpine-nginx)](https://hub.docker.com/r/maurosoft1973/alpine-nginx/) is based on the minimal [Alpine Linux](https://alpinelinux.org/) with [Nginx v1.19.8](https://nginx.org/) web server.
 
-##### Alpine Version 3.13.3 (Released Mar 25, 2021)
+##### Alpine Version 3.13.4 (Released Mar 31, 2021)
 ##### Nginx Version 1.19.8 (Released Mar 9, 2021)
 
 ----
@@ -55,4 +55,4 @@ The goal behind NGINX was to create the fastest web server around, and maintaini
 * `WWW_GROUP_ID`:
 
 ***
-###### Last Update 26.03.2021 11:28:18
+###### Last Update 02.04.2021 19:35:32
