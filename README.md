@@ -23,6 +23,10 @@ NGINX is open source software for web serving, reverse proxying, caching, load b
 
 The goal behind NGINX was to create the fastest web server around, and maintaining that excellence is still a central goal of the project. NGINX consistently beats Apache and other servers in benchmarks measuring web server performance. Since the original release of NGINX, however, websites have expanded from simple HTML pages to dynamic, multifaceted content. NGINX has grown along with it and now supports all the components of the modern Web, including WebSocket, HTTP/2, gRPC, and streaming of multiple video formats (HDS, HLS, RTMP, and others).
 
+The versions of images are:
+* base : only nginx web server
+* geo : nginx web server + maxmind geo module with database
+
 ## Architectures
 
 * ```:amd64```, ```:x86_64``` - 64 bit Intel/AMD (x86_64/amd64)
@@ -31,6 +35,8 @@ The goal behind NGINX was to create the fastest web server around, and maintaini
 
 * ```:latest``` latest branch based (Automatic Architecture Selection)
 * ```:amd64```, ```:x86_64```  amd64 based on latest tag but amd64 architecture
+* ```:geo``` geo latest branch based (Automatic Architecture Selection)
+* ```:geo-amd64```, ```:geo-x86_64```  geo amd64 based on latest tag but amd64 architecture
 
 ## Layers & Sizes
 
@@ -55,4 +61,4 @@ The goal behind NGINX was to create the fastest web server around, and maintaini
 * `WWW_GROUP_ID`:
 
 ***
-###### Last Update 02.04.2021 19:35:32
+###### Last Update 02.04.2021 19:48:08
